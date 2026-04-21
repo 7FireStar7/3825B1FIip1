@@ -1,0 +1,6 @@
+apple яблоко
+hospital больница
+pen ручка
+pen карандаш
+pineapple ананас
+pineapple супер_ананас
