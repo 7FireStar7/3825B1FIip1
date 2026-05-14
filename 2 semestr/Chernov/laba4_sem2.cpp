@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream> //для 8-9
+#include <clocale>
 
 class Thermometer
 {
@@ -31,6 +32,10 @@ public:
 		start_day = startDay;
 		start_month = startMonth;
 		start_hour = startHour;
+		if (Year % 4 == 0 && Year % 100 !=0) {
+			std::cout << "год не должен быть високосным\n" << std::endl;
+			return;
+		}
 		year = Year;
 	}
 
@@ -186,7 +191,6 @@ public:
 };
 
 std::ostream& operator<<(std::ostream& os, const Thermometer& t) {
-	os << "<=== THERMOMETR STATS ===>\n";
 	os << "Start: " << t.get_start_time() << "\n";
 	os << "Total amount of observations: " << t.observations.size() << "\n";
 	if (!t.observations.empty()) {
@@ -203,6 +207,12 @@ std::ostream& operator<<(std::ostream& os, const Thermometer& t) {
 
 int main() {
 	std::cout << "===== FULL TEST OF THERMOMETER CLASS =====\n\n";
+	setlocale(LC_CTYPE, "Russian");
+
+	//проверим, что не дает записать високосный год
+	Thermometer therm;
+	therm.set_start_time(1, 1, 1, 2020);
+
 
 	// ------------------------------------------------------------
 	// Пункты 1 и 2: установка и получение начальных даты/времени
@@ -320,6 +330,8 @@ int main() {
 	peregruzka.add_observation(11, 5, 7, 30.5);
 	std::vector<int> hours1 = { 8, 12, 16, 20 };
 	std::vector<double> temps1 = { 22.0, 25.0, 24.5, 19.0 };
+
+
 	peregruzka.set_day_series(11, 5, hours1, temps1); //тут тестим, что раньше start'овых значений не принимает
 	std::cout << peregruzka << std::endl; //тестим перегрузку
 
